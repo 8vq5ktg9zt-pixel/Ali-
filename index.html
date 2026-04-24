@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>إلى مريومتي</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; text-align: center; overflow-x: hidden; background: linear-gradient(135deg, #ffebee 0%, #fad0c4 100%); }
+        
+        /* حركة القلوب في الخلفية */
+        #hearts-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .heart { position: absolute; width: 15px; height: 15px; background-color: #ff8a80; opacity: 0; transform: rotate(-45deg); animation: moveHeart 7s linear infinite; }
+        .heart::before, .heart::after { content: ''; position: absolute; width: 100%; height: 100%; background-color: inherit; border-radius: 50%; }
+        .heart::before { top: -50%; left: 0; }
+        .heart::after { top: 0; left: 50%; }
+        @keyframes moveHeart { 
+            0% { top: 110%; transform: rotate(-45deg) scale(0.5); opacity: 0; }
+            15% { opacity: 0.6; }
+            100% { top: -10%; transform: rotate(-45deg) scale(1.2); opacity: 0; }
+        }
+
+        /* شاشة الباسورد */
+        #lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffcdd2; display: flex; align-items: center; justify-content: center; z-index: 10000; }
+        .lock-box { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 85%; max-width: 350px; }
+        input { padding: 12px; margin: 15px 0; border-radius: 25px; border: 1px solid #ddd; text-align: center; width: 100%; font-size: 1.1rem; outline: none; }
+        .unlock-btn { padding: 12px; border-radius: 25px; border: none; background: #ef5350; color: white; cursor: pointer; font-size: 1.1rem; width: 100%; font-weight: bold; }
+
+        /* الصفحة الأساسية */
+        #main-content { display: none; position: relative; z-index: 10; padding: 20px; }
+        h1 { font-size: 2.2rem; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); margin-bottom: 5px; }
+        #countdown { display: flex; justify-content: center; gap: 8px; margin: 20px 0; }
+        .time-box { background: rgba(255, 255, 255, 0.9); padding: 10px; border-radius: 12px; min-width: 65px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .time-box span { font-weight: bold; color: #d32f2f; display: block; font-size: 1.3rem; }
+        .footer-text { background: white; padding: 15px 25px; border-radius: 50px; display: inline-block; color: #c62828; font-weight: bold; margin: 25px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        /* تنسيق صور المعرض */
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 500px; margin: 20px auto; }
+        .gallery-item { border-radius: 12px; overflow: hidden; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .gallery-item img { width: 100%; height: 160px; object-fit: cover; display: block; }
+    </style>
+</head>
+<body onload="initHearts()">
+
+    <div id="hearts-container"></div>
+
+    <div id="lock-screen">
+        <div class="lock-box">
+            <h2 style="color: #c62828; margin-top:0;">مريومتي ❤️</h2>
+            <p>اكتبي تاريخ اليوم اللي جمعنا</p>
+            <input type="text" id="passInput" placeholder="4/6/2025">
+            <button class="unlock-btn" onclick="unlock()">فتح المفاجأة ✨</button>
+            <p id="error" style="color:red; display:none; margin-top:10px;">التاريخ غلط يا حبيبتي! ❤️</p>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <h1>مريومتي حبيبتي</h1>
+        <p style="color:white; font-size: 1.1rem;">هانت ونقفل أول سنة مع بعض ❤️</p>
+
+        <div id="countdown">
+            <div class="time-box"><span id="days">00</span>يوم</div>
+            <div class="time-box"><span id="hours">00</span>ساعة</div>
+            <div class="time-box"><span id="minutes">00</span>دقيقة</div>
+            <div class="time-box"><span id="seconds">00</span>ثانية</div>
+        </div>
+
+        <div class="footer-text">بحبك يا أم حمو.. ويارب دايماً مع بعض 💍</div>
+
+        <audio id="bgMusic" loop>
+            <source src="mp32026.mp3" type="audio/mpeg">
+        </audio>
+
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="IMG_6284.jpeg"></div>
+            <div class="gallery-item"><img src="IMG_6285.jpeg"></div>
+            <div class="gallery-item"><img src="IMG_2622.jpeg"></div>
+            <div class="gallery-item"><img src="IMG_2626.jpeg"></div>
+            <div class="gallery-item"><img src="IMG_2627.jpeg"></div>
+            <div class="gallery-item"><img src="34ee18b3-cd71-4297-8bc5-5f63c7608f61.jpeg"></div>
+            <div class="gallery-item"><img src="40daca6e-49c1-4168-9222-57704ae9659b.jpeg"></div>
+            <div class="gallery-item"><img src="422d2480-af4b-4a4b-9cce-687c32354974.jpeg"></div>
+            <div class="gallery-item"><img src="61cf5c55-f455-4a0e-95b2-616691f15e79.jpeg"></div>
+            <div class="gallery-item"><img src="DA1BA1D3-9F90-4583-B0BC-D64CEBA42A27.jpeg"></div>
+            <div class="gallery-item"><img src="f3303791-153c-4a77-8f39-4b1e0385d314.jpeg"></div>
+        </div>
+    </div>
+
+    <script>
+        // قلوب متحركة
+        function initHearts() {
+            const container = document.getElementById('hearts-container');
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 7 + 's';
+                container.appendChild(heart);
+            }
+        }
+
+        // تشغيل الصفحة
+        function unlock() {
+            const pass = document.getElementById("passInput").value;
+            if (pass === "4/6/2025") {
+                document.getElementById("lock-screen").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+                document.getElementById("bgMusic").play();
+            } else {
+                document.getElementById("error").style.display = "block";
+            }
+        }
+
+        // العداد
+        const target = new Date("2025-06-04T00:00:00").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const diff = target - now;
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("seconds").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+        }, 1000);
+    </script>
+</body>
+</html>
