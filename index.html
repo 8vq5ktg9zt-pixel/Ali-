@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>مريومتي ❤️</title>
+    <style>
+        body { margin: 0; background: #fff0f3; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; font-family: sans-serif; }
+        
+        /* شاشة الباسورد */
+        #passwordScreen { position: fixed; width: 100%; height: 100%; background: #ffccd5; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
+        input { padding: 10px; border-radius: 10px; border: none; margin-bottom: 10px; width: 250px; text-align: center; }
+        button { padding: 10px 20px; border-radius: 10px; border: none; background: #ff4d6d; color: white; cursor: pointer; }
+
+        /* المحتوى */
+        #mainContent { display: none; text-align: center; }
+        .slideshow-container { width: 300px; height: 300px; margin: 20px auto; border-radius: 20px; overflow: hidden; border: 5px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .slide { width: 100%; height: 100%; object-fit: cover; display: none; }
+        
+        .heart { position: absolute; color: #ff4d6d; font-size: 20px; animation: fall linear infinite; }
+        @keyframes fall { to { transform: translateY(100vh); } }
+    </style>
+</head>
+<body>
+
+    <div id="passwordScreen">
+        <h2 style="color: white;">اكتبي الباسورد يا مريومتي ❤️</h2>
+        <input type="text" id="pass" placeholder="نن عيون علي">
+        <button onclick="check()">دخول</button>
+    </div>
+
+    <div id="mainContent">
+        <h1>أحلى مريومة ❤️</h1>
+        <div class="slideshow-container">
+            <img class="slide" src="IMG_2622.jpeg">
+            <img class="slide" src="IMG_2626.jpeg">
+            <img class="slide" src="IMG_2627.jpeg">
+            <img class="slide" src="IMG_6284.jpeg">
+            <img class="slide" src="IMG_6285.jpeg">
+        </div>
+        <audio id="audio" loop><source src="IMG_1405.mp3" type="audio/mpeg"></audio>
+    </div>
+
+    <script>
+        function check() {
+            if(document.getElementById('pass').value === "نن عيون علي") {
+                document.getElementById('passwordScreen').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                document.getElementById('audio').play();
+                startSlides();
+                startHearts();
+            } else { alert("غلط يا قلبي!"); }
+        }
+
+        // عرض الصور بالتوالي
+        let slideIndex = 0;
+        function startSlides() {
+            let slides = document.getElementsByClassName("slide");
+            for(let i=0; i<slides.length; i++) slides[i].style.display = "none";
+            slideIndex++;
+            if(slideIndex > slides.length) slideIndex = 1;
+            slides[slideIndex-1].style.display = "block";
+            setTimeout(startSlides, 3000); // الصورة تقعد 3 ثواني
+        }
+
+        // قلوب كتير جداً
+        function startHearts() {
+            setInterval(() => {
+                let h = document.createElement('div');
+                h.innerHTML = '❤️';
+                h.className = 'heart';
+                h.style.left = Math.random() * 100 + 'vw';
+                h.style.animationDuration = Math.random() * 3 + 2 + 's';
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 5000);
+            }, 100);
+        }
+    </script>
+</body>
+</html>
