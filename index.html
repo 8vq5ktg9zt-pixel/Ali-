@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مريومتي 💗</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffe6eb 0%, #def3f8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* القلوب المتحركة في الخلفية */
+        .heart {
+            position: absolute;
+            color: #ffb6c1;
+            font-size: 20px;
+            animation: float 6s infinite ease-in;
+            opacity: 0.6;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
+            max-width: 90%;
+            width: 450px;
+            z-index: 10;
+            position: relative;
+        }
+
+        /* شاشة كلمة السر */
+        .pass-screen input {
+            padding: 10px 15px;
+            border: 2px solid #ffb6c1;
+            border-radius: 10px;
+            outline: none;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 15px;
+            width: 80%;
+        }
+
+        .pass-screen button {
+            padding: 10px 25px;
+            background: #ff85a1;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .pass-screen button:hover {
+            background: #ff6083;
+        }
+
+        /* العداد */
+        .counter {
+            font-size: 18px;
+            color: #d85778;
+            margin-bottom: 20px;
+            font-weight: bold;
+            background: #fff0f3;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        /* الرسائل */
+        .message {
+            font-size: 17px;
+            color: #4a4a4a;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            white-space: pre-line;
+        }
+
+        /* العرض المتتابع للصور */
+        .gallery {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gallery img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .gallery img.active {
+            opacity: 1;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- القلوب في الخلفية -->
+    <div id="hearts-container"></div>
+
+    <!-- شاشة إدخال كلمة السر -->
+    <div class="container" id="login-screen">
+        <h2 style="color: #ff6083; margin-bottom: 10px;">أهلاً بكِ 💗</h2>
+        <p style="color: #666;">ادخلي تاريخ اليوم المميز (DD/MM/YYYY)</p>
+        <input type="password" id="password" placeholder="26/10/2008">
+        <br>
+        <button onclick="checkPassword()">دخول</button>
+        <p id="error-msg" style="color: red; margin-top: 10px; display: none;">كلمة السر غير صحيحة!</p>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container hidden" id="main-screen">
+        <!-- عداد الأيام -->
+        <div class="counter" id="days-counter"></div>
+
+        <!-- الرسالة الأولى -->
+        <div class="message" id="first-msg">
+            مريومتي يحبيبتي و حبيبت ايامي كل سنه و انتي طيبه و يارب ديما سوا مع بعض تاني عيد ميلاد ليكي و احنا سوا حبيبت اخلي العيد ميلاد ده مميز عن كل سنه السنادي هتتمي 18 سنه يحبيبت قلبي 💗
+        </div>
+
+        <!-- معارض الصور -->
+        <div class="gallery" id="gallery-box">
+            <img src="1.JPG" id="img-1">
+            <img src="2.JPG" id="img-2">
+            <img src="3.JPG" id="img-3">
+            <img src="4.JPG" id="img-4">
+            <img src="5.JPG" id="img-5">
+            <img src="6.JPG" id="img-6">
+            <img src="7.JPG" id="img-7">
+            <img src="8.JPG" id="img-8">
+            <img src="9.jpg" id="img-9">
+        </div>
+
+        <!-- الرسالة النهائية -->
+        <div class="message hidden" id="final-msg" style="margin-top: 20px;">
+            تاني عيد ميلاد ليكي و احنا سوا و مش آخر سنه هنكون سوا لاخر العمر سوا يحبيبتي بحبك يمريومتي💗💗💗
+        </div>
+    </div>
+
+    <!-- الملف الصوتي -->
+    <audio id="bg-music" src="MP3 .mp3" loop></audio>
+
+    <script>
+        // إنشاء قلوب هادئة متطايرة في الخلفية
+        const heartsContainer = document.getElementById('hearts-container');
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '💗';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            heartsContainer.appendChild(heart);
+        }
+
+        // حساب عدد الأيام من 26/10/2008
+        function calculateDays() {
+            const startDate = new Date('2008-10-26');
+            const today = new Date();
+            const diffTime = Math.abs(today - startDate);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('days-counter').innerHTML = `عدى على وجودك في الدنيا ${diffDays} يوم ✨💗`;
+        }
+
+        // التحقق من كلمة السر وبدء العرض
+        function checkPassword() {
+            const input = document.getElementById('password').value;
+            if (input === '26/10/2008') {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('main-screen').classList.remove('hidden');
+                
+                // تشغيل الموسيقى
+                const audio = document.getElementById('bg-music');
+                audio.play().catch(() => console.log("تفاعل المستخدم مطلوب لتشغيل الصوت"));
+
+                calculateDays();
+                startImageGallery();
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+
+        // عرض الصور بالتدريج من 1 إلى 9 ثم إخفائها وإظهار الرسالة الأخيرة
+        function startImageGallery() {
+            let currentImg = 1;
+            const totalImages = 9;
+            const displayTime = 3000; // كل صورة تظهر لمدة 3 ثوانٍ
+
+            function showNextImage() {
+                if (currentImg <= totalImages) {
+                    // إخفاء الصورة السابقة
+                    if (currentImg > 1) {
+                        document.getElementById(`img-${currentImg - 1}`).classList.remove('active');
+                    }
+                    // إظهار الصورة الحالية
+                    document.getElementById(`img-${currentImg}`).classList.add('active');
+                    currentImg++;
+                    setTimeout(showNextImage, displayTime);
+                } else {
+                    // إخفاء آخر صورة وإظهار الرسالة النهائية
+                    document.getElementById(`img-${totalImages}`).classList.remove('active');
+                    document.getElementById('gallery-box').style.display = 'none';
+                    document.getElementById('final-msg').classList.remove('hidden');
+                }
+            }
+
+            // البدء بعد ثانية من فتح الصفحة
+            setTimeout(showNextImage, 1000);
+        }
+    </script>
+</body>
+</html>
